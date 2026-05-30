@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            padding: 0 20px;
+            margin-top: 20vh;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 18px 60px 18px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            background: #fff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .search-box input:focus {
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .search-box button {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .search-box button:hover {
+            opacity: 0.9;
+        }
+
+        .search-engines {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .search-engines label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .search-engines input[type="radio"] {
+            accent-color: #fff;
+        }
+
+        .footer {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            position: fixed;
+            bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🔍 搜索</div>
+        <div class="subtitle">快速搜索你想要的</div>
+
+        <form class="search-box" id="searchForm">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="输入关键词搜索..."
+                autofocus
+            />
+            <button type="submit">搜索</button>
+        </form>
+
+        <div class="search-engines">
+            <label>
+                <input type="radio" name="engine" value="google" checked />
+                谷歌
+            </label>
+            <label>
+                <input type="radio" name="engine" value="baidu" />
+                百度
+            </label>
+            <label>
+                <input type="radio" name="engine" value="bing" />
+                必应
+            </label>
+            <label>
+                <input type="radio" name="engine" value="sogou" />
+                搜狗
+            </label>
+            <label>
+                <input type="radio" name="engine" value="duckduckgo" />
+                DuckDuckGo
+            </label>
+        </div>
+    </div>
+
+    <div class="footer">
+        支持各大浏览器 · 按 Enter 搜索
+    </div>
+
+    <script>
+        const searchUrls = {
+            google:    'https://www.google.com/search?q=',
+            baidu:     'https://www.baidu.com/s?wd=',
+            bing:      'https://www.bing.com/search?q=',
+            sogou:     'https://www.sogou.com/web?query=',
+            duckduckgo:'https://duckduckgo.com/?q=',
+        };
+
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) return;
+
+            const selected = document.querySelector('input[name="engine"]:checked');
+            const engine = selected ? selected.value : 'google';
+            const url = searchUrls[engine] + encodeURIComponent(query);
+            window.open(url, '_blank');
+        });
+    </script>
+</body>
+</html>
